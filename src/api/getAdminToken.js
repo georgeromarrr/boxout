@@ -3,7 +3,7 @@ import {
   ADMIN_API_KEY, 
   ADMIN_SECRET_KEY} from './config.js';
 
-export default function GetAdminToken() {
+const GetAdminToken = () => {
   const [token, setToken] = useState(null);
 
   const headerAPI = new Headers();
@@ -36,3 +36,5 @@ export default function GetAdminToken() {
 
   return 'admin: ' + token;
 }
+
+export default GetAdminToken

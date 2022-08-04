@@ -3,7 +3,7 @@ import {
   CLIENT_API_KEY, 
   CLIENT_SECRET_KEY} from './config.js';
 
-export default function GetClientToken() {
+const GetClientToken = () => {
   const [token, setToken] = useState(null);
 
   const headerAPI = new Headers();
@@ -36,3 +36,5 @@ export default function GetClientToken() {
 
   return 'client: ' + token;
 }
+
+export default  GetClientToken
