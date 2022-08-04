@@ -1,27 +1,37 @@
+import { useState, useEffect } from 'react';
 import {
   BrowserRouter,
   Routes,
   Route,
 } from "react-router-dom";
 import './App.css';
-import GetClientToken from './api/getClientToken';
-import GetAdminToken from './api/getAdminToken';
+import { getClientToken } from './api/getClientToken';
+// import GetAdminToken from './api/getAdminToken';
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
-import Register from "./pages/register/Register";
+import { ClientTokenContext } from "./context/ClientTokenContext";
 
 function App() {
-  let token = GetClientToken();
+  const [clientToken, setClientToken] = useState('');
 
-  console.log(token);
+  const initClientToken = async () => {
+    let token = await getClientToken();
+    setClientToken(token);
+  }
+
+  useEffect(() => {
+    initClientToken();
+  }, [])
+
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-      </Routes>
-    </BrowserRouter>
+    <ClientTokenContext.Provider value={{ clientToken, setClientToken }}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </BrowserRouter>
+    </ClientTokenContext.Provider>
   );
 }
 
