@@ -3,7 +3,7 @@ import {
   CLIENT_API_KEY, 
   CLIENT_SECRET_KEY} from './config.js';
 
-const GetAdminToken = () => {
+export default function GetClientToken() {
   const [token, setToken] = useState(null);
 
   const headerAPI = new Headers();
@@ -31,9 +31,8 @@ const GetAdminToken = () => {
     })
     .then((res) => {setToken(res.access_token)})
     .catch((err) => console.log(err));
-  },[token]);
+  },[]);
    
-  console.log('client:', token);
-}
 
-export default GetAdminToken
+  return 'client: ' + token;
+}
