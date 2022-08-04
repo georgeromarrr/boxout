@@ -3,9 +3,9 @@ import GetClientToken from './api/getClientToken';
 import GetAdminToken from './api/getAdminToken';
 
 function App() {
+  let token = GetClientToken();
 
-  console.log(GetClientToken());
-  console.log(GetAdminToken());
+  console.log(token);
   return (
     <div className="App">
       
