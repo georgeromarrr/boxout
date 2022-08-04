@@ -2,7 +2,7 @@ import React from "react";
 import Footer from "../../Components/footer/Footer";
 import Navbar from "../../Components/navbar/Navbar";
 
-const Login = () => {
+const Register = () => {
     return (
         <>
         <Navbar />
@@ -10,8 +10,9 @@ const Login = () => {
         
 <div class="flex flex-col w-full max-w-md px-4 py-8 sm:px-6 md:px-8 lg:px-10 mx-auto">
     <div class="self-center mb-6 text-xl font-semibold sm:text-2xl">
-        Login
+        Create An Account
     </div>
+    <p className="text-center text-xs">Please register below to create a new account on our website.</p>
     <div class="mt-8">
         <form action="#" autoComplete="off">
             <div class="flex flex-col mb-2">
@@ -33,27 +34,24 @@ const Login = () => {
                                 </path>
                             </svg>
                         </span>
-                        <input type="password" id="sign-in-email" class=" flex-1 appearance-none border border-black w-full py-3 px-4 text-black placeholder-black shadow-sm text-sm focus:outline-none focus:border-black" placeholder="Password"/>
+                        <input type="password" id="sign-in-email" class=" flex-1 appearance-none border border-black w-full py-3 px-4 text-black placeholder-black shadow-sm text-sm focus:outline-none focus:border-black" placeholder="Create Password"/>
                         </div>
                     </div>
-                    <div class="flex items-center mb-6 -mt-4">
-                        <div class="flex ml-auto">
-                            <a href="#" class="inline-flex text-xs sm:text-sm">
-                                Forgot Your Password?
-                            </a>
-                        </div>
+                    <div className="items-center mb-6 -mt-2">
+                        <input id="link-checkbox" type="checkbox" value="" className="w-3 h-3 border-black" />
+                        <label for="link-checkbox" className="ml-2 text-xs">Sign up to our newsletter & receive the latest news, offer & discounts</label>
                     </div>
                     <div class="flex w-full">
                         <button type="submit" class="py-2 px-4 bg-black text-white w-full text-center text-base font-semibold">
-                            Login
+                            Register
                         </button>
                     </div>
                 </form>
             </div>
             <div class="flex items-center justify-center mt-6">
-                <a href="/register" class="inline-flex items-center text-xs text-center">
+                <a href="/login" class="inline-flex items-center text-xs text-center">
                     <span class="ml-2">
-                        You don&#x27;t have an account?
+                        Already have an account?
                     </span>
                 </a>
             </div>
@@ -64,4 +62,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default Register
