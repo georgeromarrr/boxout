@@ -5,11 +5,12 @@ import swal from 'sweetalert';
 
 import { UserApi } from "../../api/user";
 
-import { ClientTokenContext } from "../../context/ClientTokenContext";
+// import { ClientTokenContext } from "../../context/ClientTokenContext";
+import { TokenContext } from "../../context/TokenContext";
 
 const Login = () => {
 
-    const { clientToken } = useContext(ClientTokenContext);
+    const { clientToken } = useContext(TokenContext);
 
     const usernameRef = useRef();
     const passwordRef = useRef();
@@ -23,6 +24,7 @@ const Login = () => {
         }
 
         const response = await UserApi('POST', '/login', clientToken, JSON.stringify(body));
+
         if ( response.code === 200 ) return swal(response.message,`Welcome back ${response.user_profile.first_name}`,"success");
         swal("Login failed",response.message, "error")
             .then( () => window.location.reload())
