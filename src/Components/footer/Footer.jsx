@@ -40,7 +40,7 @@ const Footer = () => {
                 </ul>
             </div>
         </div>
-        <div className="bg-white text-black pl-44 text-sm">Copyright © 2022 Boxout, Inc. All rights reserved.</div>
+        <div className="bg-white text-black px-60 py-3 text-sm">Copyright © 2022 Boxout, Inc. All rights reserved.</div>
         </div>
     )
 };
