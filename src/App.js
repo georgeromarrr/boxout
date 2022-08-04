@@ -4,17 +4,17 @@ import {
   Route,
 } from "react-router-dom";
 import './App.css';
-import Home from "./pages/home/Home";
-import Login from "./pages/login/Login";
+import GetClientToken from './api/getClientToken';
+import GetAdminToken from './api/getAdminToken';
 
 function App() {
+  let token = GetClientToken();
+
+  console.log(token);
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
-    </BrowserRouter>
+    <div className="App">
+      
+    </div>
   );
 }
 
