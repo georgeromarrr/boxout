@@ -39,9 +39,6 @@ const Product = () => {
   myHeaders.append("Authorization", 'Bearer ' + adminToken);
   myHeaders.append("Content-Type", "text/plain");
 
-  const product = "product";
-  const filename = "test.jpeg";
-
   const bodyAPI = ('{\r\n  \"filename\": \"test.jpeg\",\r\n  \"content\": \"' + result + '\",\r\n  \"module\": \"product\"\r\n}');
 
   const requestAPI = {
@@ -65,7 +62,7 @@ const Product = () => {
   }, [])
 
 
-    console.log(bodyAPI);
+    console.log(getAdminToken);
   
     return (
       
