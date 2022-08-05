@@ -13,7 +13,10 @@ import { getClientToken } from './api/getClientToken';
 // pages
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
-import Register from './pages/register/Register';
+import Shop from "./pages/shop/Shop";
+import Wishlist from './pages/wishlist/Wishlist';
+import Register from "./pages/register/Register";
+import Cart from './pages/cart/Cart';
 
 // contexts
 import { ClientTokenContext } from "./context/ClientTokenContext";
@@ -37,9 +40,12 @@ function App() {
     <UserContext.Provider value={{ user, setUser }}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path='/register' element={<Register />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path='/register' element={<Register />} />
+            <Route path="/shop" element={<Shop />} />
+            <Route path='/wishlist' element={<Wishlist />} />
+            <Route path='/cart' element={<Cart />} />
         </Routes>
       </BrowserRouter>
     </UserContext.Provider>
