@@ -1,12 +1,15 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
+import { getAdminToken } from '../../../api/getAdminToken';
+
 
 const Product = () => {
+  const [adminToken, setAdminToken] = useState("");
   const [base64Img, setBase64Img] = useState("");
 
   const uploadImage = async (e) => {
     const file = e.target.files[0];
     const base64 = await convertBase64(file);
-    setBase64Img(base64.replace(/^data:image\/[a-z]+;base64,/, ""));
+    setBase64Img(base64);
     // setBase64Img(base64.replace(/^data:image\/[a-z]+;base64,/, ""));
   }
 
@@ -24,8 +27,46 @@ const Product = () => {
       };
     });
   }
+
+  const result = base64Img.replace(/^data:image\/[a-z]+;base64,/, "");
+
+  const initToken = async () => {
+    let admin_Token = await getAdminToken();
+    setAdminToken(admin_Token);
+  }
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", 'Bearer ' + adminToken);
+  myHeaders.append("Content-Type", "text/plain");
+
+  const product = "product";
+  const filename = "test.jpeg";
+
+  const bodyAPI = ('{\r\n  \"filename\": \"test.jpeg\",\r\n  \"content\": \"' + result + '\",\r\n  \"module\": \"product\"\r\n}');
+
+  const requestAPI = {
+    method: 'POST',
+    headers: myHeaders,
+    body: bodyAPI,
+    redirect: 'follow'
+  };
+
+  useEffect(() => {
+    initToken();
+    fetch('https://api.concati.com/inventory/medias', requestAPI)
+    .then((res) => {
+      if (res.ok){
+        return res.json();
+      }
+      throw new Error("Bad Response");
+    })
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err));
+  }, [])
+
+
+    console.log(bodyAPI);
   
-    console.log(base64Img);
     return (
       
         <div>
