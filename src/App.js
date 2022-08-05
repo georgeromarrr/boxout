@@ -21,6 +21,7 @@ import Cart from './pages/cart/Cart';
 // contexts
 import { ClientTokenContext } from "./context/ClientTokenContext";
 import { UserContext } from "./context/UserContext";
+import Item from './pages/showItem/Item';
 
 function App() {
   const [clientToken, setClientToken] = useState('');
@@ -51,6 +52,7 @@ function App() {
             <Route path="/shop" element={<Shop />} />
             <Route path='/wishlist' element={<Wishlist />} />
             <Route path='/cart' element={<Cart />} />
+            <Route path='/item' element={<Item />} />
         </Routes>
       </BrowserRouter>
     </UserContext.Provider>
