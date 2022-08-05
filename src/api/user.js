@@ -119,30 +119,30 @@
 //     "mobile_verified"
 // }
 
-export const UserApi = ( method, url, token, body ) => {
+export const UserApi = ( method, url, token, body, userToken ) => {
     const baseUrl = 'https://api.concati.com/users';
     let myHeaders = new Headers();
     if ( method === 'POST' || method === 'PUT')
         myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Accept", "application/json");
     myHeaders.append("Authorization", 'Bearer ' + token);
-    // myHeaders.append("Access-Token", 'Bearer ' + token);
+    if (userToken) myHeaders.append("Access-Token", 'Bearer ' + token);
     
-    let requestOptions = {
+    // let requestOptions = 
+    
+    return fetch(baseUrl + url, {
       method,
       headers: myHeaders,
-      body: body ? JSON.stringify(body) : null,
+      body: JSON.stringify(body),
       redirect: 'follow'
-    };
-    
-    return fetch(baseUrl + url, requestOptions)
+    })
       .then(response => {
         // throw new Error('Bad Response');
         if (!response.ok) console.error(response);
         return response.json()
       })
-      .then(result => { return result })
-      .catch(error => console.error('error', error));
+      .then(result => result )
+      .catch(error => error );
 }
 
 // export const AdminUserApi = ( method, url, token, body = {} ) => {
