@@ -5,6 +5,8 @@ import { getAdminToken } from '../../../api/getAdminToken';
 const Product = () => {
   const [adminToken, setAdminToken] = useState("");
   const [base64Img, setBase64Img] = useState("");
+  const [imgMedia, setImgMedia] = useState(null);
+  const [imgLink, setImgLink] = useState(null);
 
   const uploadImage = async (e) => {
     const file = e.target.files[0];
@@ -28,7 +30,7 @@ const Product = () => {
     });
   }
 
-  const result = base64Img.replace(/^data:image\/[a-z]+;base64,/, "");
+  const resultImg = base64Img.replace(/^data:image\/[a-z]+;base64,/, "");
 
   const initToken = async () => {
     let admin_Token = await getAdminToken();
@@ -39,7 +41,7 @@ const Product = () => {
   myHeaders.append("Authorization", 'Bearer ' + adminToken);
   myHeaders.append("Content-Type", "text/plain");
 
-  const bodyAPI = ('{\r\n  \"filename\": \"test.jpeg\",\r\n  \"content\": \"' + result + '\",\r\n  \"module\": \"product\"\r\n}');
+  const bodyAPI = ('{\r\n  \"filename\": \"test.jpeg\",\r\n  \"content\": \"'+resultImg+'\",\r\n  \"module\": \"product\"\r\n}');
 
   const requestAPI = {
     method: 'POST',
@@ -50,6 +52,21 @@ const Product = () => {
 
   useEffect(() => {
     initToken();
+  }, [])
+
+   const imgObj = {
+    imgBase64: base64Img,
+    media_id: imgMedia,
+    media_url: imgLink
+  };
+
+  const imgBase64Obj = () => {
+    return imgObj;
+  }
+
+  const handleImageSubmit = async ev => {
+    ev.preventDefault();
+
     fetch('https://api.concati.com/inventory/medias', requestAPI)
     .then((res) => {
       if (res.ok){
@@ -57,19 +74,17 @@ const Product = () => {
       }
       throw new Error("Bad Response");
     })
-    .then((res) => console.log(res))
+    .then((res) => {{setImgMedia(res.data.media_id)} {setImgLink(res.data.media_url)}})
     .catch((err) => console.log(err));
-  }, [])
+  }
 
 
-    console.log(getAdminToken);
-  
     return (
       
         <div>
           <div class="h-64"></div>
         <div class="flex justify-center">
-          <form action="#" method="POST">
+          <form action="#" onSubmit={handleImageSubmit}>
             <div>
                 <label class="block text-sm font-medium text-gray-700"> Cover photo </label>
                 <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
@@ -99,6 +114,7 @@ const Product = () => {
         </div>
         </div>
     )
+    
 }
 
 export default Product

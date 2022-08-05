@@ -10,7 +10,7 @@ import { getAdminToken } from './api/getAdminToken';
 // import GetAdminToken from './api/getAdminToken';
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
-import Product from './pages/admin/product/product';
+import Testx from "./pages/admin/test/test"
 // import { ClientTokenContext } from "./context/ClientTokenContext";
 import { TokenContext } from "./context/TokenContext";
 
@@ -44,7 +44,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/create-product-img" element={<Product />} />
+          <Route path="/create-product-img" element={<Testx />} />
         </Routes>
       </BrowserRouter>
     </TokenContext.Provider>
