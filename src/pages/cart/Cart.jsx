@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 import Navbar from "../../Components/navbar/Navbar"
 import Footer from "../../Components//footer/Footer"
 const Cart = () => {
@@ -39,7 +40,7 @@ const Cart = () => {
                     </div>
                     <button className="w-full bg-black text-white py-2">Checkout</button>
                 </div>
-                <a className="text-xs underline underline-offset-4" href="/wishlist">View my Wishlist</a>
+                <Link className="text-xs underline underline-offset-4" to="/wishlist">View my Wishlist</Link>
             </div>
         </div>
         <Footer />
