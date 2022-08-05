@@ -1,4 +1,4 @@
-export const ADMIN_API_KEY = 'or6wNnTUGdov0zkHfQ';
-export const ADMIN_SECRET_KEY = 'WZbhP23kme4zgpCnefnLvjDLuFKi44StcmPRYd8HjWMM2HpyRhf5CYOlBv25s5walmJxc7KMKL5oqNJuScj1MPyy';
-export const CLIENT_API_KEY = 'wz86F1OveaZv8HpdNy';
-export const CLIENT_SECRET_KEY = 'mPVl6wdMhsLyeBirUfuZ32XOZW0s7eWbyPcExtLxtSyLYZ0Eidb6nSjJOcw7QMN9Z4WcpCIr00n13IhxoQi8brYY';
+export const ADMIN_API_KEY = 'TU37qS7jXVywVywrf4';
+export const ADMIN_SECRET_KEY = 'vETbf96m01pA7I7Vh3lqcmn2qtb3l4Q7W8nexSk5d9IWOlmQ04wFlpmRlsAJDEa6DZqhdY3lpWu91ZvJrSqjMx5x';
+export const CLIENT_API_KEY = 'tZei2vhqS0OLe5HCwe';
+export const CLIENT_SECRET_KEY = 'wBQMtuz4xaSo5shGaYmv8brLeHU894CBSeM91talefy6TIHJXShskHl5GIjdYle1oliwhpp3sBcsnHWwIhL42EpU';

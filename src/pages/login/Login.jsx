@@ -6,12 +6,12 @@ import swal from 'sweetalert';
 
 import { UserApi } from "../../api/user";
 
-import { ClientTokenContext } from "../../context/ClientTokenContext";
+import { TokenContext } from "../../context/TokenContext";
 import { UserContext } from "../../context/UserContext";
 
 const Login = () => {
 
-    const { clientToken, replaceClientToken } = useContext(ClientTokenContext);
+    const { clientToken, replaceClientToken } = useContext(TokenContext);
     const { setUser } = useContext(UserContext);
 
     const usernameRef = useRef();
@@ -30,7 +30,7 @@ const Login = () => {
         try {
             const response = await UserApi('POST', '/login', clientToken, body);
             console.log(response);
-            if ( response.code === 200 ) {
+            if ( response.status === 200 ) {
                 setUser({ ...response.user_profile, accessToken: response.access_token, refreshToken: response.refresh_token });
                 return swal(response.message,`Welcome back ${response.user_profile.first_name}`,"success")
                     .then( () => window.location = '/' )

@@ -6,11 +6,11 @@ import Navbar from "../../Components/navbar/Navbar";
 
 import { UserApi } from "../../api/user";
 
-import { ClientTokenContext } from "../../context/ClientTokenContext";
+import { TokenContext } from "../../context/TokenContext";
 
 const Register = () => {
 
-    const { clientToken, replaceClientToken } = useContext(ClientTokenContext);
+    const { clientToken, replaceClientToken } = useContext(TokenContext);
 
     const emailRef = useRef();
     const passwordRef = useRef();
@@ -33,10 +33,10 @@ const Register = () => {
 
         const response = await UserApi('POST', '/register',  clientToken, body);
         console.log(response);
-        if ( response.code === 200 ) {
+        if ( response.status === 200 ) {
             return swal(response.message,`Thanks for joining!`,"success")
                 .then( () => window.location = '/');
-        } else if ( response.code === 403 ) {
+        } else if ( response.status === 403 ) {
             replaceClientToken();
             return handleRegister(ev);
         }
