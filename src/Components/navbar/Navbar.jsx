@@ -10,23 +10,25 @@ const Navbar = () => {
     return (
         <div className="container grid grid-cols-3 py-6 mx-auto">
             <div className="flex flex-row gap-8">
-                <a href="/shop">Shop</a> 
-                <h1>About</h1>
-                <h1>Reviews</h1>
+                <Link to="/shop">Shop</Link> 
+                <Link to='/'>About</Link>
+                <Link to='/'>Reviews</Link>
             </div>
             <div className="text-center">
-                <h1 className="text-2xl uppercase font-semibold tracking-widest"><a href="/">Boxout</a></h1>
+                <h1 className="text-2xl uppercase font-semibold tracking-widest"><Link to="/">Boxout</Link></h1>
             </div>
             <div className="flex flex-row gap-8 place-content-end">
                 <Link to='/wishlist'>
                     <WishlistSvg />
                 </Link>
-                <SearchSvg />
+                <Link to='/'>
+                    <SearchSvg />
+                </Link>
                 <Link to="/cart">
                     <CartSvg />
                 </Link>
                 <Link to={ user ? "/" /* link to profile if user is logged in "/profile" */ : "/login"}>
-                    <ProfileSvg />
+                    <ProfileSvg /> { user ? `Hi, ${user.first_name}` : ''}
                 </Link>
             </div>
         </div>

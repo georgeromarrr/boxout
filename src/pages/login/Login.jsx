@@ -1,5 +1,5 @@
 import { useRef, useContext } from "react";
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import Footer from "../../Components/footer/Footer";
 import Navbar from "../../Components/navbar/Navbar";
 import swal from 'sweetalert';
@@ -12,7 +12,7 @@ import { UserContext } from "../../context/UserContext";
 const Login = () => {
 
     const { clientToken, replaceClientToken } = useContext(TokenContext);
-    const { setUser } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
 
     const usernameRef = useRef();
     const passwordRef = useRef();
@@ -30,88 +30,91 @@ const Login = () => {
         try {
             const response = await UserApi('POST', '/login', clientToken, body);
             console.log(response);
-            if ( response.status === 200 ) {
+            if ( response.code === 200 || response.status === 200 ) {
                 setUser({ ...response.user_profile, accessToken: response.access_token, refreshToken: response.refresh_token });
                 return swal(response.message,`Welcome back ${response.user_profile.first_name}`,"success")
-                    .then( () => window.location = '/' )
             }
         } catch (err) {
-            if ( err.status === 403 ) {
+            if ( err.code === 403 || err.status === 403 ) {
                 replaceClientToken();
-                console.log(clientToken);
-                return handleLogin(ev);
+                return swal("Login failed","Please try again later.","error")
+                    .then( () => passwordRef.current.value = '')
             }
             swal("Login failed",err.message, "error")
-                // .then( () => window.location.reload())
                 .then( () => passwordRef.current.value = '' )
         }
     }
 
     return (
         <>
-        <Navbar />
-        
-        
+        {
+            user ? <Navigate to='/' replace={true} /> : (
+            <>
+<Navbar />
+
 <div className="flex flex-col w-full max-w-md px-4 py-8 sm:px-6 md:px-8 lg:px-10 mx-auto">
-    <div className="self-center mb-6 text-xl font-semibold sm:text-2xl">
-        Login
-    </div>
-    <div className="mt-8">
-        <form action="#" autoComplete="off" onSubmit={handleLogin}>
-            <div className="flex flex-col mb-2">
-                <div className="flex relative ">
-                    <span className="inline-flex  items-center px-3 border-t border-l border-b  border-black text-black shadow-sm text-sm">
-                        <EmailSvg />
-                    </span>
-                    <input 
-                        type="text" 
-                        id="sign-in-email" 
-                        className=" flex-1 appearance-none border border-black w-full py-3 px-4 text-black placeholder-black shadow-sm text-sm focus:outline-none focus:border-black"
-                        placeholder="Email"
-                        ref={usernameRef}
-                        required
-                    />
-                    </div>
-                </div>
-                <div className="flex flex-col mb-6">
-                    <div className="flex relative ">
-                        <span className="inline-flex  items-center px-3 border-t border-l border-b  border-black text-black shadow-sm text-sm">
-                            <LockSvg />
-                        </span>
-                        <input 
-                            type="password" 
-                            id="sign-in-password" 
-                            className=" flex-1 appearance-none border border-black w-full py-3 px-4 text-black placeholder-black shadow-sm text-sm focus:outline-none focus:border-black" 
-                            placeholder="Password"
-                            ref={passwordRef}
-                            required
-                        />
-                        </div>
-                    </div>
-                    <div className="flex items-center mb-6 -mt-4">
-                        <div className="flex ml-auto">
-                            <a href="/" className="inline-flex text-xs sm:text-sm">
-                                Forgot Your Password?
-                            </a>
-                        </div>
-                    </div>
-                    <div className="flex w-full">
-                        <button type="submit" className="py-2 px-4 bg-black text-white w-full text-center text-base font-semibold">
-                            Login
-                        </button>
-                    </div>
-                </form>
-            </div>
-            <div className="flex items-center justify-center mt-6">
-                <Link to="/register" className="inline-flex items-center text-xs text-center">
-                    <span className="ml-2">
-                        You don&#x27;t have an account?
-                    </span>
-                </Link>
+<div className="self-center mb-6 text-xl font-semibold sm:text-2xl">
+    Login
+</div>
+<div className="mt-8">
+    <form action="#" autoComplete="off" onSubmit={handleLogin}>
+        <div className="flex flex-col mb-2">
+            <div className="flex relative ">
+                <span className="inline-flex  items-center px-3 border-t border-l border-b  border-black text-black shadow-sm text-sm">
+                    <EmailSvg />
+                </span>
+                <input 
+                    type="text" 
+                    id="sign-in-email" 
+                    className=" flex-1 appearance-none border border-black w-full py-3 px-4 text-black placeholder-black shadow-sm text-sm focus:outline-none focus:border-black"
+                    placeholder="Email"
+                    ref={usernameRef}
+                    required
+                />
             </div>
         </div>
+        <div className="flex flex-col mb-6">
+            <div className="flex relative ">
+                <span className="inline-flex  items-center px-3 border-t border-l border-b  border-black text-black shadow-sm text-sm">
+                    <LockSvg />
+                </span>
+                <input 
+                    type="password" 
+                    id="sign-in-password" 
+                    className=" flex-1 appearance-none border border-black w-full py-3 px-4 text-black placeholder-black shadow-sm text-sm focus:outline-none focus:border-black" 
+                    placeholder="Password"
+                    ref={passwordRef}
+                    required
+                />
+                </div>
+            </div>
+            <div className="flex items-center mb-6 -mt-4">
+                <div className="flex ml-auto">
+                    <a href="/" className="inline-flex text-xs sm:text-sm">
+                        Forgot Your Password?
+                    </a>
+                </div>
+            </div>
+            <div className="flex w-full">
+                <button type="submit" className="py-2 px-4 bg-black text-white w-full text-center text-base font-semibold">
+                    Login
+                </button>
+            </div>
+    </form>
+</div>
+<div className="flex items-center justify-center mt-6">
+    <Link to="/register" className="inline-flex items-center text-xs text-center">
+        <span className="ml-2">
+            You don&#x27;t have an account?
+        </span>
+    </Link>
+</div>
+</div>
 
-        <Footer />
+<Footer />
+            </>
+            )
+        }
         </>
     )
 }

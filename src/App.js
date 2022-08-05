@@ -68,9 +68,9 @@ function App() {
   //   console.log(adminToken);
   // }, [adminToken])
 
-  // useEffect(() => {
-  //   console.log(user);
-  // }, [user])
+  useEffect(() => {
+    console.log(user);
+  }, [user])
 
   useEffect(() => {
     initToken();
@@ -86,7 +86,7 @@ function App() {
           <Routes>
               <Route path="/" element={<Home />} />
               {/* make login path inaccessible if user is logged in */}
-              { user ? '' : <Route path="/login" element={<Login />} /> }
+              <Route path="/login" element={<Login />} />
               <Route path='/register' element={<Register />} />
               <Route path="/shop" element={<Shop />} />
               <Route path='/wishlist' element={<Wishlist />} />

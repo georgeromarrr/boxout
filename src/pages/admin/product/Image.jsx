@@ -1,12 +1,13 @@
 import React, { useState, useContext } from "react";
 import Navbar from "../../../Components/navbar/Navbar";
+import swal from 'sweetalert';
+
 import { TokenContext } from "../../../context/TokenContext";
 
 const Product = () => {
   const [imgFile, setImgFile] = useState(null);
-  const [base64Img, setBase64Img] = useState('');
 
-  const { adminToken, replaceAdminToken }  = useContext(TokenContext);
+  const { adminToken }  = useContext(TokenContext);
   
 
   const uploadImage = async (e) => {
@@ -45,9 +46,8 @@ const Product = () => {
     
     return fetch(baseUrl + url, requestOptions)
       .then(async (response) => {
-        // throw new Error('Bad Response');
         if ( response.status === 403 ) {
-          console.log(response);
+          swal("Upload error", "Please try again later", "error");
         }
         if (!response.ok) return console.error(response);
         return response.json()
@@ -71,7 +71,7 @@ const Product = () => {
     console.log(body);
 
     const response = await ImgNewMedia( 'POST', '/medias', adminToken, body);
-    console.log(response);
+    if (response) swal("Upload success", "", "success");
   }
   
     return (

@@ -33,10 +33,10 @@ const Register = () => {
 
         const response = await UserApi('POST', '/register',  clientToken, body);
         console.log(response);
-        if ( response.status === 200 ) {
+        if ( response.code === 200 || response.status === 200 ) {
             return swal(response.message,`Thanks for joining!`,"success")
                 .then( () => window.location = '/');
-        } else if ( response.status === 403 ) {
+        } else if ( response.code === 403 || response.status === 403 ) {
             replaceClientToken();
             return handleRegister(ev);
         }
