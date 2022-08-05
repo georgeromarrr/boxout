@@ -33,7 +33,7 @@ const Register = () => {
 
         const response = await UserApi('POST', '/register',  clientToken, body);
         console.log(response);
-        if ( response.code == 200 )
+        if ( response.code === 200 )
             return swal(response.message,`Thanks for joining!`,"success")
                 .then( () => window.location = '/');
         swal("Login failed", response.message, "error");

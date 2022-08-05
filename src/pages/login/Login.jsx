@@ -1,4 +1,5 @@
 import { useRef, useContext } from "react";
+import { Link } from 'react-router-dom';
 import Footer from "../../Components/footer/Footer";
 import Navbar from "../../Components/navbar/Navbar";
 import swal from 'sweetalert';
@@ -95,11 +96,11 @@ const Login = () => {
                 </form>
             </div>
             <div className="flex items-center justify-center mt-6">
-                <a href="/" className="inline-flex items-center text-xs text-center">
+                <Link to="/register" className="inline-flex items-center text-xs text-center">
                     <span className="ml-2">
                         You don&#x27;t have an account?
                     </span>
-                </a>
+                </Link>
             </div>
         </div>
 
