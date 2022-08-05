@@ -1,4 +1,5 @@
 import { useRef, useContext } from "react";
+import { Link } from 'react-router-dom';
 import Footer from "../../Components/footer/Footer";
 import Navbar from "../../Components/navbar/Navbar";
 import swal from 'sweetalert';
@@ -6,10 +7,12 @@ import swal from 'sweetalert';
 import { UserApi } from "../../api/user";
 
 import { ClientTokenContext } from "../../context/ClientTokenContext";
+import { UserContext } from "../../context/UserContext";
 
 const Login = () => {
 
     const { clientToken } = useContext(ClientTokenContext);
+    const { setUser } = useContext(UserContext);
 
     const usernameRef = useRef();
     const passwordRef = useRef();
@@ -22,8 +25,11 @@ const Login = () => {
             password: passwordRef.current.value
         }
 
-        const response = await UserApi('POST', '/login', clientToken, JSON.stringify(body));
-        if ( response.code === 200 ) return swal(response.message,`Welcome back ${response.user_profile.first_name}`,"success");
+        const response = await UserApi('POST', '/login', clientToken, body);
+        if ( response.code === 200 ) {
+            setUser({ ...response.user_profile, accessToken: response.access_token, refreshToken: response.refresh_token });
+            return swal(response.message,`Welcome back ${response.user_profile.first_name}`,"success");
+        }
         swal("Login failed",response.message, "error")
             .then( () => window.location.reload())
     }
@@ -90,11 +96,11 @@ const Login = () => {
                 </form>
             </div>
             <div className="flex items-center justify-center mt-6">
-                <a href="/" className="inline-flex items-center text-xs text-center">
+                <Link to="/register" className="inline-flex items-center text-xs text-center">
                     <span className="ml-2">
                         You don&#x27;t have an account?
                     </span>
-                </a>
+                </Link>
             </div>
         </div>
 

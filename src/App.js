@@ -5,18 +5,26 @@ import {
   Route,
 } from "react-router-dom";
 import './App.css';
+
+// api
 import { getClientToken } from './api/getClientToken';
 // import GetAdminToken from './api/getAdminToken';
+
+// pages
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
-import Shop from "./pages/shop/Shop"
-import { ClientTokenContext } from "./context/ClientTokenContext";
+import Shop from "./pages/shop/Shop";
 import Wishlist from './pages/wishlist/Wishlist';
-import Register from "./pages/register/Register"
+import Register from "./pages/register/Register";
 import Cart from './pages/cart/Cart';
+
+// contexts
+import { ClientTokenContext } from "./context/ClientTokenContext";
+import { UserContext } from "./context/UserContext";
 
 function App() {
   const [clientToken, setClientToken] = useState('');
+  const [user, setUser] = useState(null);
 
   const initClientToken = async () => {
     let token = await getClientToken();
@@ -29,6 +37,7 @@ function App() {
 
   return (
     <ClientTokenContext.Provider value={{ clientToken, setClientToken }}>
+    <UserContext.Provider value={{ user, setUser }}>
       <BrowserRouter>
         <Routes>
             <Route path="/" element={<Home />} />
@@ -39,6 +48,7 @@ function App() {
             <Route path='/cart' element={<Cart />} />
         </Routes>
       </BrowserRouter>
+    </UserContext.Provider>
     </ClientTokenContext.Provider>
   );
 }
