@@ -2,8 +2,7 @@ import React, { useState } from 'react'
 import Rating from "@mui/material/Rating";
 
 
-const HomeCard = (props) => {
-
+const Card = (props) => {
   return (
     <div>   
       <div class="max-w-sm" key="{props.id}">
@@ -57,4 +56,4 @@ const HomeCard = (props) => {
   )
 }
 
-export default HomeCard
+export default Card
