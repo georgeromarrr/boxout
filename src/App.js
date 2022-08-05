@@ -22,6 +22,7 @@ import Product from './pages/admin/product/Image';
 // contexts
 import { TokenContext } from "./context/TokenContext";
 import { UserContext } from "./context/UserContext";
+import Item from './pages/showItem/Item';
 
 function App() {
   // const clientTokenData = localStorage.getItem('client_token');
@@ -77,6 +78,24 @@ function App() {
   }, [])
 
   return (
+<<<<<<< HEAD
+    <ClientTokenContext.Provider value={{ clientToken, setClientToken }}>
+    <UserContext.Provider value={{ user, setUser }}>
+      <BrowserRouter>
+        <Routes>
+            <Route path="/" element={<Home />} />
+            {/* make login path inaccessible if user is logged in */}
+            { user ? '' : <Route path="/login" element={<Login />} /> }
+            <Route path='/register' element={<Register />} />
+            <Route path="/shop" element={<Shop />} />
+            <Route path='/wishlist' element={<Wishlist />} />
+            <Route path='/cart' element={<Cart />} />
+            <Route path='/item' element={<Item />} />
+        </Routes>
+      </BrowserRouter>
+    </UserContext.Provider>
+    </ClientTokenContext.Provider>
+=======
     <>
     { clientToken
      ? (
@@ -98,6 +117,7 @@ function App() {
       </TokenContext.Provider>
     ) : '' }
     </>
+>>>>>>> e550caa1ef79747d3771d2050d799741310489fd
   );
 }
 
