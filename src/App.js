@@ -23,38 +23,50 @@ import { ClientTokenContext } from "./context/ClientTokenContext";
 import { UserContext } from "./context/UserContext";
 
 function App() {
-  const [clientToken, setClientToken] = useState('');
+  const clientTokenData = localStorage.getItem('client_token');
+  const [clientToken, setClientToken] = useState( clientTokenData ? clientTokenData : null );
   const [user, setUser] = useState(null);
 
-  const initClientToken = async () => {
-    let token = await getClientToken();
+  const replaceClientToken = async () => {
+    const token = await getClientToken();
+    console.log(token);
+    localStorage.setItem('client_token', token);
     setClientToken(token);
+  }
+ 
+  if (!clientToken) {
+    replaceClientToken();
   }
 
   useEffect(() => {
-    initClientToken();
-  }, [])
+    console.log(clientToken);
+  }, [clientToken])
 
   useEffect(() => {
     console.log(user);
   }, [user])
 
   return (
-    <ClientTokenContext.Provider value={{ clientToken, setClientToken }}>
-    <UserContext.Provider value={{ user, setUser }}>
-      <BrowserRouter>
-        <Routes>
-            <Route path="/" element={<Home />} />
-            {/* make login path inaccessible if user is logged in */}
-            { user ? '' : <Route path="/login" element={<Login />} /> }
-            <Route path='/register' element={<Register />} />
-            <Route path="/shop" element={<Shop />} />
-            <Route path='/wishlist' element={<Wishlist />} />
-            <Route path='/cart' element={<Cart />} />
-        </Routes>
-      </BrowserRouter>
-    </UserContext.Provider>
-    </ClientTokenContext.Provider>
+    <>
+    { clientToken
+     ? (
+      <ClientTokenContext.Provider value={{ clientToken, replaceClientToken }}>
+      <UserContext.Provider value={{ user, setUser }}>
+        <BrowserRouter>
+          <Routes>
+              <Route path="/" element={<Home />} />
+              {/* make login path inaccessible if user is logged in */}
+              { user ? '' : <Route path="/login" element={<Login />} /> }
+              <Route path='/register' element={<Register />} />
+              <Route path="/shop" element={<Shop />} />
+              <Route path='/wishlist' element={<Wishlist />} />
+              <Route path='/cart' element={<Cart />} />
+          </Routes>
+        </BrowserRouter>
+      </UserContext.Provider>
+      </ClientTokenContext.Provider>
+    ) : '' }
+    </>
   );
 }
 

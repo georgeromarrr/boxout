@@ -10,7 +10,7 @@ import { ClientTokenContext } from "../../context/ClientTokenContext";
 
 const Register = () => {
 
-    const { clientToken } = useContext(ClientTokenContext);
+    const { clientToken, replaceClientToken } = useContext(ClientTokenContext);
 
     const emailRef = useRef();
     const passwordRef = useRef();
@@ -33,9 +33,13 @@ const Register = () => {
 
         const response = await UserApi('POST', '/register',  clientToken, body);
         console.log(response);
-        if ( response.code === 200 )
+        if ( response.code === 200 ) {
             return swal(response.message,`Thanks for joining!`,"success")
                 .then( () => window.location = '/');
+        } else if ( response.code === 403 ) {
+            replaceClientToken();
+            return handleRegister(ev);
+        }
         swal("Registration failed", response.message, "error");
     }
 

@@ -11,8 +11,8 @@ import { UserContext } from "../../context/UserContext";
 
 const Login = () => {
 
-    const { clientToken } = useContext(ClientTokenContext);
-    const { user, setUser } = useContext(UserContext);
+    const { clientToken, replaceClientToken } = useContext(ClientTokenContext);
+    const { setUser } = useContext(UserContext);
 
     const usernameRef = useRef();
     const passwordRef = useRef();
@@ -25,14 +25,26 @@ const Login = () => {
             password: passwordRef.current.value
         }
 
-        const response = await UserApi('POST', '/login', clientToken, body);
-        if ( response.code === 200 ) {
-            setUser({ ...response.user_profile, accessToken: response.access_token, refreshToken: response.refresh_token });
-            return swal(response.message,`Welcome back ${response.user_profile.first_name}`,"success")
-                .then( () => window.location = '/' )
+        console.log(clientToken);
+
+        try {
+            const response = await UserApi('POST', '/login', clientToken, body);
+            console.log(response);
+            if ( response.code === 200 ) {
+                setUser({ ...response.user_profile, accessToken: response.access_token, refreshToken: response.refresh_token });
+                return swal(response.message,`Welcome back ${response.user_profile.first_name}`,"success")
+                    .then( () => window.location = '/' )
+            }
+        } catch (err) {
+            if ( err.status === 403 ) {
+                replaceClientToken();
+                console.log(clientToken);
+                return handleLogin(ev);
+            }
+            swal("Login failed",err.message, "error")
+                // .then( () => window.location.reload())
+                .then( () => passwordRef.current.value = '' )
         }
-        swal("Login failed",response.message, "error")
-            .then( () => window.location.reload())
     }
 
     return (
