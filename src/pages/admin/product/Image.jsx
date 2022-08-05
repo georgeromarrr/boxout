@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import Navbar from "../../../Components/navbar/Navbar";
 import { TokenContext } from "../../../context/TokenContext";
 
 const Product = () => {
@@ -76,6 +77,7 @@ const Product = () => {
     return (
       
       <div>
+        <Navbar />
         <div className="h-64" ></div>
         <div className="flex justify-center">
           <form action="#" method="POST" onSubmit={handleImageSubmit}>

@@ -139,10 +139,10 @@ export const UserApi = ( method, url, token, body, userToken ) => {
       .then(response => {
         // throw new Error('Bad Response');
         if (!response.ok) console.error(response);
-        console.log(response.json());
+        return response.json()
       })
       .then(result => result )
-      .catch(error => error);
+      .catch(error => error );
 }
 
 // export const AdminUserApi = ( method, url, token, body = {} ) => {
