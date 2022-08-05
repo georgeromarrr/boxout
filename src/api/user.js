@@ -119,7 +119,7 @@
 //     "mobile_verified"
 // }
 
-export const UserApi = ( method, url, token, body = {} ) => {
+export const UserApi = ( method, url, token, body ) => {
     const baseUrl = 'https://api.concati.com/users';
     let myHeaders = new Headers();
     if ( method === 'POST' || method === 'PUT')
@@ -131,7 +131,7 @@ export const UserApi = ( method, url, token, body = {} ) => {
     let requestOptions = {
       method,
       headers: myHeaders,
-      body,
+      body: body ? JSON.stringify(body) : null,
       redirect: 'follow'
     };
     
