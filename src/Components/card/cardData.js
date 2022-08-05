@@ -1,3 +1,47 @@
+/*
+Concati Product Data
+store_id: string
+category_id: string
+brand_name: string
+name: string
+description: string
+is_active: boolean ( set to true )
+properties: Object Array 
+    property object {
+        id: string
+        name: string
+        option: string Array
+    }
+variants: Object Array
+    variant object {
+        properties: property Array
+            property object {
+                id: string
+                option: string
+            }
+        name: string
+        description: string
+        price: float string
+        quantity: integer
+        sku_code: string
+        barcode: string
+        images: Object Array
+            image object {
+                media_id: string
+                order: integer
+                is_main: boolean
+            }
+        metas: Objet Array
+    }
+images: Object Array
+    image object {
+        media_id: string
+        order: integer
+        is_main: boolean
+    }
+metas: Objet Array
+*/
+
 const Homedata = [
   {
       id: 1,

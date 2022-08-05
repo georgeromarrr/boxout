@@ -35,13 +35,18 @@ function App() {
     initClientToken();
   }, [])
 
+  useEffect(() => {
+    console.log(user);
+  }, [user])
+
   return (
     <ClientTokenContext.Provider value={{ clientToken, setClientToken }}>
     <UserContext.Provider value={{ user, setUser }}>
       <BrowserRouter>
         <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
+            {/* make login path inaccessible if user is logged in */}
+            { user ? '' : <Route path="/login" element={<Login />} /> }
             <Route path='/register' element={<Register />} />
             <Route path="/shop" element={<Shop />} />
             <Route path='/wishlist' element={<Wishlist />} />
