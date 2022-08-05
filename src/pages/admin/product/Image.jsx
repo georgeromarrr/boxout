@@ -38,7 +38,7 @@ const Product = () => {
     let requestOptions = {
       method,
       headers,
-      body,
+      body: JSON.stringify(body),
       redirect: 'follow'
     };
     
@@ -67,6 +67,7 @@ const Product = () => {
       content,
       module: "product"
     }
+    console.log(body);
 
     const response = await ImgNewMedia( 'POST', '/medias', adminToken, body);
     console.log(response);

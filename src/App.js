@@ -8,7 +8,7 @@ import './App.css';
 
 // api
 import { getClientToken } from './api/getClientToken';
-// import GetAdminToken from './api/getAdminToken';
+import { getAdminToken } from './api/getAdminToken';
 
 // pages
 import Home from "./pages/home/Home";
@@ -25,9 +25,11 @@ import { UserContext } from "./context/UserContext";
 
 function App() {
   const clientTokenData = localStorage.getItem('client_token');
-  const [clientToken, setClientToken] = useState( clientTokenData ? clientTokenData : null );
+  const [clientToken, setClientToken] = useState( clientTokenData ? clientTokenData.toString() : null );
   const adminTokenData = localStorage.getItem('admin_token');
-  const [adminToken, setAdminToken] = useState( adminTokenData ? adminTokenData : null );
+  const [adminToken, setAdminToken] = useState( adminTokenData ? adminTokenData.toString() : null );
+  // const [clientToken, setClientToken] = useState( null );
+  // const [adminToken, setAdminToken] = useState( null );
 
   const [user, setUser] = useState(null);
 
@@ -38,7 +40,7 @@ function App() {
   }
 
   const replaceAdminToken = async () => {
-    const token = await getClientToken();
+    const token = await getAdminToken();
     localStorage.setItem('admin_token', token);
     setAdminToken(token);
   }
@@ -49,6 +51,13 @@ function App() {
  
   if (!adminToken) {
     replaceAdminToken();
+  }
+
+  const initToken = async () => {
+    let client_token = await getClientToken();
+    setClientToken(client_token);
+    let admin_token = await getAdminToken();
+    setAdminToken(adminToken);
   }
 
   useEffect(() => {
@@ -62,6 +71,10 @@ function App() {
   useEffect(() => {
     console.log(user);
   }, [user])
+
+  // useEffect(() => {
+  //   initToken();
+  // }, [])
 
   return (
     <>
