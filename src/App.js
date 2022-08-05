@@ -24,12 +24,12 @@ import { TokenContext } from "./context/TokenContext";
 import { UserContext } from "./context/UserContext";
 
 function App() {
-  const clientTokenData = localStorage.getItem('client_token');
-  const [clientToken, setClientToken] = useState( clientTokenData ? clientTokenData.toString() : null );
-  const adminTokenData = localStorage.getItem('admin_token');
-  const [adminToken, setAdminToken] = useState( adminTokenData ? adminTokenData.toString() : null );
-  // const [clientToken, setClientToken] = useState( null );
-  // const [adminToken, setAdminToken] = useState( null );
+  // const clientTokenData = localStorage.getItem('client_token');
+  // const [clientToken, setClientToken] = useState( clientTokenData ? clientTokenData.toString() : null );
+  // const adminTokenData = localStorage.getItem('admin_token');
+  // const [adminToken, setAdminToken] = useState( adminTokenData ? adminTokenData.toString() : null );
+  const [clientToken, setClientToken] = useState( null );
+  const [adminToken, setAdminToken] = useState( null );
 
   const [user, setUser] = useState(null);
 
@@ -57,24 +57,24 @@ function App() {
     let client_token = await getClientToken();
     setClientToken(client_token);
     let admin_token = await getAdminToken();
-    setAdminToken(adminToken);
+    setAdminToken(admin_token);
   }
 
-  useEffect(() => {
-    console.log(clientToken);
-  }, [clientToken])
-
-  useEffect(() => {
-    console.log(adminToken);
-  }, [adminToken])
-
-  useEffect(() => {
-    console.log(user);
-  }, [user])
+  // useEffect(() => {
+  //   console.log(clientToken);
+  // }, [clientToken])
 
   // useEffect(() => {
-  //   initToken();
-  // }, [])
+  //   console.log(adminToken);
+  // }, [adminToken])
+
+  // useEffect(() => {
+  //   console.log(user);
+  // }, [user])
+
+  useEffect(() => {
+    initToken();
+  }, [])
 
   return (
     <>
