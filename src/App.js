@@ -7,8 +7,8 @@ import {
 import './App.css';
 
 // api
-import { getClientToken } from './api/getClientToken';
-import { getAdminToken } from './api/getAdminToken';
+import { getAdminToken, getClientToken } from './api/auth';
+// import { UserApi } from './api/user';
 
 // pages
 import Home from "./pages/home/Home";
@@ -19,6 +19,7 @@ import Register from "./pages/register/Register";
 import Cart from './pages/cart/Cart';
 import Product from './pages/admin/product/Image';
 import ProductList from './pages/home/ProductList';
+import Profile from './pages/profile/Profile';
 
 // contexts
 import { TokenContext } from "./context/TokenContext";
@@ -33,7 +34,16 @@ function App() {
   const [clientToken, setClientToken] = useState( null );
   const [adminToken, setAdminToken] = useState( null );
 
-  const [user, setUser] = useState(null);
+  const userData = localStorage.getItem('user');
+  const [user, setUser] = useState(userData ? JSON.parse(userData) : null);
+  
+  const replaceUserTokens = async () => {
+    // const body = {
+    //   refresh_token: user.refreshToken
+    // }
+    // const data = await UserApi('POST', '/refresh-token', clientToken, body);
+    // console.log(data);
+  }
 
   const replaceClientToken = async () => {
     const token = await getClientToken();
@@ -70,20 +80,25 @@ function App() {
   //   console.log(adminToken);
   // }, [adminToken])
 
-  useEffect(() => {
-    console.log(user);
-  }, [user])
+  // useEffect(() => {
+  //   console.log(user);
+  //   // localStorage.setItem('user', JSON.stringify(user))
+  // }, [user])
 
   useEffect(() => {
     initToken();
   }, [])
+
+  // if (user) {
+  //   replaceUserTokens();
+  // }
 
   return (
     <>
     { clientToken
      ? (
       <TokenContext.Provider value={{ clientToken, replaceClientToken, adminToken, replaceAdminToken }}>
-      <UserContext.Provider value={{ user, setUser }}>
+      <UserContext.Provider value={{ user, setUser, replaceUserTokens }}>
         <BrowserRouter>
           <Routes>
               <Route path="/" element={<Home />} />
@@ -96,6 +111,7 @@ function App() {
               <Route path='/item' element={<Item />} />
               <Route path='/image-upload' element={<Product />} />
               <Route path='/prd' element={<ProductList />} />
+              <Route path='/profile' element={<Profile />} />
           </Routes>
         </BrowserRouter>
       </UserContext.Provider>

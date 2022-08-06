@@ -27,8 +27,8 @@ const Navbar = () => {
                 <Link to="/cart">
                     <CartSvg />
                 </Link>
-                <Link to={ user ? "/" /* link to profile if user is logged in "/profile" */ : "/login"}>
-                    <ProfileSvg /> { user ? `Hi, ${user.first_name}` : ''}
+                <Link to={ user ? "/profile" : "/login"} className="flex flex-row gap-2 w-max">
+                    <ProfileSvg /> { user ? <div>{user.first_name}</div> : ''}
                 </Link>
             </div>
         </div>

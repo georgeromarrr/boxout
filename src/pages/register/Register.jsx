@@ -12,6 +12,7 @@ const Register = () => {
 
     const { clientToken, replaceClientToken } = useContext(TokenContext);
 
+    const firstnameRef = useRef();
     const emailRef = useRef();
     const passwordRef = useRef();
     const cPasswordRef = useRef();
@@ -27,6 +28,7 @@ const Register = () => {
         setError('');
 
         const body = {
+            first_name: firstnameRef.current.value,
             email: emailRef.current.value,
             password: passwordRef.current.value,
         }
@@ -44,11 +46,11 @@ const Register = () => {
     }
 
     return (
-        <>
+        <div className="flex flex-col min-h-screen">
         <Navbar />
         
         
-<div className="flex flex-col w-full max-w-md px-4 py-8 sm:px-6 md:px-8 lg:px-10 mx-auto">
+<div className="flex-grow flex flex-col w-full max-w-md px-4 py-8 sm:px-6 md:px-8 lg:px-10 mx-auto">
     <div className="self-center mb-6 text-xl font-semibold sm:text-2xl">
         Create An Account
     </div>
@@ -63,10 +65,25 @@ const Register = () => {
             <div className="flex flex-col mb-2">
                 <div className="flex relative ">
                     <span className="inline-flex  items-center px-3 border-t border-l border-b  border-black text-black shadow-sm text-sm">
-                        <MailSvg />
+                        <NameSvg />
                     </span>
                     <input 
                         type="text" 
+                        id="sign-in-first-name" 
+                        className=" flex-1 appearance-none border border-black w-full py-3 px-4 text-black placeholder-black shadow-sm text-sm focus:outline-none focus:border-black" 
+                        placeholder="Enter First Name"
+                        ref={firstnameRef}
+                        required
+                    />
+                </div>
+            </div>
+            <div className="flex flex-col mb-2">
+                <div className="flex relative ">
+                    <span className="inline-flex  items-center px-3 border-t border-l border-b  border-black text-black shadow-sm text-sm">
+                        <MailSvg />
+                    </span>
+                    <input 
+                        type="email" 
                         id="sign-in-email" 
                         className=" flex-1 appearance-none border border-black w-full py-3 px-4 text-black placeholder-black shadow-sm text-sm focus:outline-none focus:border-black" 
                         placeholder="Enter Email"
@@ -126,7 +143,7 @@ const Register = () => {
 </div>
 
         <Footer />
-        </>
+        </div>
     )
 }
 
@@ -146,6 +163,17 @@ const LockSvg = () => {
         <svg width="15" height="15" fill="currentColor" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
             <path d="M1376 768q40 0 68 28t28 68v576q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-576q0-40 28-68t68-28h32v-320q0-185 131.5-316.5t316.5-131.5 316.5 131.5 131.5 316.5q0 26-19 45t-45 19h-64q-26 0-45-19t-19-45q0-106-75-181t-181-75-181 75-75 181v320h736z">
             </path>
+        </svg>
+    )
+}
+
+const NameSvg = () => {
+    return (
+        <svg width="15" height="15" viewBox="0 0 12 12" enable-background="new 0 0 12 12" version="1.1" xmlSpace="preserve" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+            <g>
+                <path d="M9.3005371,6.5351563C8.4776001,7.4294434,7.3084106,8,6,8S3.5223999,7.4294434,2.6994629,6.5351563   C1.3145142,7.2350464,0.5,8.6131592,0.5,10.5V12h11v-1.5C11.5,8.6131592,10.6854858,7.2350464,9.3005371,6.5351563z" fill="#1D1D1B"/>
+                <circle cx="6" cy="3.5" fill="#1D1D1B" r="3.5"/>
+            </g>
         </svg>
     )
 }

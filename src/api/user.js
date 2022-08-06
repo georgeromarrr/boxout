@@ -119,20 +119,18 @@
 //     "mobile_verified"
 // }
 
-export const UserApi = ( method, url, token, body, userToken ) => {
+export const UserApi = ( method, url, token, body, walletToken ) => {
     const baseUrl = 'https://api.concati.com/users';
-    let myHeaders = new Headers();
+    let headers = new Headers();
     if ( method === 'POST' || method === 'PUT')
-        myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Accept", "application/json");
-    myHeaders.append("Authorization", 'Bearer ' + token);
-    if (userToken) myHeaders.append("Access-Token", 'Bearer ' + token);
-    
-    // let requestOptions = 
+        headers.append("Content-Type", "application/json");
+    headers.append("Accept", "application/json");
+    headers.append("Authorization", 'Bearer ' + token);
+    if (walletToken) headers.append("Access-Token", 'Bearer ' + walletToken);
     
     return fetch(baseUrl + url, {
       method,
-      headers: myHeaders,
+      headers,
       body: JSON.stringify(body),
       redirect: 'follow'
     })
