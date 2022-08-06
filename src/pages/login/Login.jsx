@@ -29,7 +29,10 @@ const Login = () => {
         try {
             const response = await UserApi('POST', '/login', clientToken, body);
             if ( response.code === 200 || response.status === 200 ) {
-                await OTPApi('/email', clientToken, { email: usernameRef.current.value })
+                const OTPResponse = await OTPApi('/email', clientToken, { email: usernameRef.current.value })
+                if (OTPResponse.code === 400 || OTPResponse.status === 400) {
+                    return swal('Login failed', 'Cannot send OTP. Resend is only allowed after 300 seconds. Please try again later', 'error');
+                }
                 return setUser({ ...response.user_profile, accessToken: response.access_token, refreshToken: response.refresh_token });
             }
             swal("Login failed",response.message, "error")
@@ -64,7 +67,7 @@ const Login = () => {
                     <EmailSvg />
                 </span>
                 <input 
-                    type="text" 
+                    type="email" 
                     id="sign-in-email" 
                     className=" flex-1 appearance-none border border-black w-full py-3 px-4 text-black placeholder-black shadow-sm text-sm focus:outline-none focus:border-black"
                     placeholder="Email"

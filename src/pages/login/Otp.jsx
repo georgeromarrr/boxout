@@ -50,6 +50,15 @@ const Otp = () => {
                 return swal('Login successful', `Welcome back ${user.first_name}`, 'success')
                     .then(() => setOTPSuccess(true))
             }
+            if ( response.code === 401 || response.status === 401 ) {
+                return swal(`OTP Didn't Match`, `Please Try Again`, 'error')
+            }
+            if ( response.code === 404 || response.status === 404 ) {
+                return swal(`OTP not found`, `Please Resend`, 'error')
+            }
+            if ( response.code === 410 || response.status === 410 ) {
+                return swal(`Expired Code`, `Please Resend And Try Again`, 'error')
+            }
             swal('Wrong OTP', 'Please retry', 'error')
         } catch( error ) {
             console.error(error);
@@ -81,7 +90,7 @@ const Otp = () => {
                     <LockSvg />
                 </span>
                 <input 
-                    type="tel" 
+                    type="number" 
                     id="sign-in-password" 
                     className=" flex-1 appearance-none border border-black w-full py-3 px-4 text-black placeholder-black shadow-sm text-sm focus:outline-none focus:border-black" 
                     placeholder="OTP Code"
