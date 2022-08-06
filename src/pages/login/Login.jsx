@@ -32,6 +32,8 @@ const Login = () => {
                 setUser({ ...response.user_profile, accessToken: response.access_token, refreshToken: response.refresh_token });
                 return swal(response.message,`Welcome back ${response.user_profile.first_name}`,"success")
             }
+            swal("Login failed",response.message, "error")
+                .then( () => passwordRef.current.value = '' )
         } catch (err) {
             if ( err.code === 403 || err.status === 403 ) {
                 replaceClientToken();
