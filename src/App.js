@@ -18,7 +18,7 @@ import Wishlist from './pages/wishlist/Wishlist';
 import Register from "./pages/register/Register";
 import Cart from './pages/cart/Cart';
 import Product from './pages/admin/product/Image';
-import ProductList from './pages/home/ProductList';
+// import ProductList from './pages/home/ProductList';
 import Profile from './pages/profile/Profile';
 import Otp from './pages/login/Otp';
 

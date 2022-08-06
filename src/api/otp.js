@@ -1,7 +1,6 @@
 
 
 export const OTPApi = async (url, token, body) => {
-    console.log(body);
     const baseUrl = 'https://api.concati.com/otp';
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');

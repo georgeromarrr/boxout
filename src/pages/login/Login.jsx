@@ -28,9 +28,8 @@ const Login = () => {
 
         try {
             const response = await UserApi('POST', '/login', clientToken, body);
-            console.log(response);
             if ( response.code === 200 || response.status === 200 ) {
-                const OTPResponse = await OTPApi('/email', clientToken, { email: usernameRef.current.value })
+                await OTPApi('/email', clientToken, { email: usernameRef.current.value })
                 return setUser({ ...response.user_profile, accessToken: response.access_token, refreshToken: response.refresh_token });
             }
             swal("Login failed",response.message, "error")
