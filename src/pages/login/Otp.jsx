@@ -1,5 +1,5 @@
 import { useRef, useContext, useState } from "react";
-import { Link, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import Footer from "../../Components/footer/Footer";
 import Navbar from "../../Components/navbar/Navbar";
 import swal from 'sweetalert';
@@ -14,7 +14,7 @@ const Otp = () => {
     const [OTPSuccess, setOTPSuccess] = useState(false);
 
     const { clientToken } = useContext(TokenContext);
-    const { user, setUser } = useContext(UserContext);
+    const { user } = useContext(UserContext);
 
     const OTPRef = useRef();
 
@@ -32,7 +32,7 @@ const Otp = () => {
             swal('OTP failed to resend', 'Resend is only allowed after 300 seconds.', 'error');
 
         } catch( error ) {
-            console.error('error' + error);
+            console.error(error);
         }
     }
 
@@ -46,7 +46,6 @@ const Otp = () => {
 
         try {
             const response = await OTPApi('/email/verify', clientToken, body)
-            console.log(response);
             if ( response.code === 200 || response.status === 200 ) {
                 return swal('Login successful', `Welcome back ${user.first_name}`, 'success')
                     .then(() => setOTPSuccess(true))
@@ -60,7 +59,11 @@ const Otp = () => {
     return (
         <>
         {
-            OTPSuccess ? <Navigate to='/' replace={true} /> : (
+            !user
+            ? <Navigate to='/' replace={true} />
+            : OTPSuccess
+            ? <Navigate to='/' replace={true} />
+            : (
             <div className="flex flex-col min-h-screen">
 <Navbar />
 
