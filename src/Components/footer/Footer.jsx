@@ -8,7 +8,7 @@ const Footer = () => {
                         <div className="flex flex-col place-items-center text-center w-48 gap-6 mx-auto">
                             <TruckSvg />
                             <h1 className="font-bold text-xl">Free Shipping</h1>
-                            <p className="text-sm leading-loose">For all over the Philippines(minimum spend).</p>
+                            <p className="text-sm leading-loose">For all over the Philippines (minimum spend).</p>
                         </div>
                         <div className="flex flex-col place-items-center text-center w-48 gap-6 mx-auto">
                             <GiftSvg />
