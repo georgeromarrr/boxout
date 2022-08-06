@@ -8,7 +8,7 @@ const Footer = () => {
                         <div className="flex flex-col place-items-center text-center w-48 gap-6 mx-auto">
                             <TruckSvg />
                             <h1 className="font-bold text-xl">Free Shipping</h1>
-                            <p className="text-sm leading-loose">For the UK, US, EU, Canada & Australia(minimum spend).</p>
+                            <p className="text-sm leading-loose">For all over the Philippines(minimum spend).</p>
                         </div>
                         <div className="flex flex-col place-items-center text-center w-48 gap-6 mx-auto">
                             <GiftSvg />
@@ -18,7 +18,7 @@ const Footer = () => {
                         <div className="flex flex-col place-items-center text-center w-48 gap-6 mx-auto">
                             <ReturnsSvg />
                             <h1 className="font-bold text-xl">Free Returns</h1>
-                            <p className="text-sm leading-loose">For the UK, US, EU, Canada & Australia, Rest of the World &#8369; 1, 100.00</p>
+                            <p className="text-sm leading-loose">For all over the Philippines &#8369; 1, 500.00</p>
                         </div>
                     </div>
                 </div>
@@ -27,7 +27,7 @@ const Footer = () => {
                 <div className="flex flex-col gap-4">
                     <h1 className="text-2xl font-bold">Boxout</h1>
                     <p className="flex flex-row">
-                        <span className="mr-3"><PinSvg /></span>  184 Main Rd E, St Albans VIC 3021, Australia
+                        <span className="mr-3"><PinSvg /></span>  18F Main Rd E, Albama Bldg. Makati City, Philippines
                     </p>
                     <p className="flex flex-row">
                         <span className="mr-3"><MailSvg /></span>  boxout@company.com
