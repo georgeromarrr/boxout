@@ -14,7 +14,7 @@ export const OTPApi = async (url, token, body) => {
         body: JSON.stringify(body),
         redirect: 'follow'
     })
-    .then(response => response.text())
+    .then(response => response)
     .then(result => result)
     .catch(error => error);
 }

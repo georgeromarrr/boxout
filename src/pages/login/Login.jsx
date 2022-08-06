@@ -5,6 +5,7 @@ import Navbar from "../../Components/navbar/Navbar";
 import swal from 'sweetalert';
 
 import { UserApi } from "../../api/user";
+import { OTPApi } from "../../api/otp";
 
 import { TokenContext } from "../../context/TokenContext";
 import { UserContext } from "../../context/UserContext";
@@ -29,8 +30,8 @@ const Login = () => {
             const response = await UserApi('POST', '/login', clientToken, body);
             console.log(response);
             if ( response.code === 200 || response.status === 200 ) {
-                setUser({ ...response.user_profile, accessToken: response.access_token, refreshToken: response.refresh_token });
-                return swal(response.message,`Welcome back ${response.user_profile.first_name}`,"success")
+                const OTPResponse = await OTPApi('/email', clientToken, { email: usernameRef.current.value })
+                return setUser({ ...response.user_profile, accessToken: response.access_token, refreshToken: response.refresh_token });
             }
             swal("Login failed",response.message, "error")
                 .then( () => passwordRef.current.value = '' )
@@ -48,7 +49,7 @@ const Login = () => {
     return (
         <>
         {
-            user ? <Navigate to='/' replace={true} /> : (
+            user ? <Navigate to='/otp' replace={true} /> : (
             <div className="flex flex-col min-h-screen">
 <Navbar />
 

@@ -1,52 +1,66 @@
-import { useRef, useContext } from "react";
+import { useRef, useContext, useState } from "react";
 import { Link, Navigate } from 'react-router-dom';
 import Footer from "../../Components/footer/Footer";
 import Navbar from "../../Components/navbar/Navbar";
 import swal from 'sweetalert';
 
-import { UserApi } from "../../api/user";
+import { OTPApi } from "../../api/otp";
 
 import { TokenContext } from "../../context/TokenContext";
 import { UserContext } from "../../context/UserContext";
 
 const Otp = () => {
 
-    const { clientToken, replaceClientToken } = useContext(TokenContext);
+    const [OTPSuccess, setOTPSuccess] = useState(false);
+
+    const { clientToken } = useContext(TokenContext);
     const { user, setUser } = useContext(UserContext);
 
-    const usernameRef = useRef();
-    const passwordRef = useRef();
+    const OTPRef = useRef();
 
-    const handleLogin = async ev => {
-        ev.preventDefault();
-        
+    const resendOTP = async () => {
         const body = {
-            username: usernameRef.current.value,
-            password: passwordRef.current.value
+            email: user.email
         }
 
         try {
-            const response = await UserApi('POST', '/otp', clientToken, body);
+            const response = await OTPApi('/email', clientToken, body);
             console.log(response);
             if ( response.code === 200 || response.status === 200 ) {
-                setUser({ ...response.user_profile, accessToken: response.access_token, refreshToken: response.refresh_token });
-                return swal(response.message,`Welcome back ${response.user_profile.first_name}`,"success")
+                return swal('OTP Resent', `Please check your email`, 'success');
             }
-        } catch (err) {
-            if ( err.code === 403 || err.status === 403 ) {
-                replaceClientToken();
-                return swal("Login failed","Please try again later.","error")
-                    .then( () => passwordRef.current.value = '')
+            swal('OTP failed to resend', 'Resend is only allowed after 300 seconds.', 'error');
+
+        } catch( error ) {
+            console.error('error' + error);
+        }
+    }
+
+    const handleOTP = async ev => {
+        ev.preventDefault();
+
+        const body = {
+            email: user.email,
+            otp: OTPRef.current.value
+        }
+
+        try {
+            const response = await OTPApi('/email/verify', clientToken, body)
+            console.log(response);
+            if ( response.code === 200 || response.status === 200 ) {
+                return swal('Login successful', `Welcome back ${user.first_name}`, 'success')
+                    .then(() => setOTPSuccess(true))
             }
-            swal("Login failed",err.message, "error")
-                .then( () => passwordRef.current.value = '' )
+            swal('Wrong OTP', 'Please retry', 'error')
+        } catch( error ) {
+            console.error(error);
         }
     }
 
     return (
         <>
         {
-            user ? <Navigate to='/' replace={true} /> : (
+            OTPSuccess ? <Navigate to='/' replace={true} /> : (
             <div className="flex flex-col min-h-screen">
 <Navbar />
 
@@ -56,7 +70,7 @@ const Otp = () => {
 </div>
 
 <div className="mt-8">
-    <form action="#" autoComplete="off" onSubmit={handleLogin}>
+    <form action="#" autoComplete="off" onSubmit={handleOTP}>
 
         <div className="flex flex-col mb-6">
             <div className="flex relative ">
@@ -68,7 +82,7 @@ const Otp = () => {
                     id="sign-in-password" 
                     className=" flex-1 appearance-none border border-black w-full py-3 px-4 text-black placeholder-black shadow-sm text-sm focus:outline-none focus:border-black" 
                     placeholder="OTP Code"
-                    ref={passwordRef}
+                    ref={OTPRef}
                     required
                 />
                 </div>
@@ -80,14 +94,14 @@ const Otp = () => {
                 </button>
             </div>
     </form>
-    <div className="flex items-center justify-center mt-6">
-    <Link to="/register" className="inline-flex items-center text-xs text-center">
-        <span className="ml-2">
-            Did not recieve code?
-        </span>
-    </Link>
-    <span className="inline-flex items-center text-xs text-center"> Resend </span>
-</div>
+    <div className="flex items-center justify-center mt-6" onClick={resendOTP}>
+        <div className="inline-flex items-center text-xs text-center">
+            <span className="ml-2">
+                Did not recieve code?
+            </span>
+        </div>
+        <span className="inline-flex items-center text-xs text-center"> Resend </span>
+    </div>
 </div>
 </div>
 
@@ -100,15 +114,6 @@ const Otp = () => {
 }
 
 export default Otp
-
-const EmailSvg = () => {
-    return (
-        <svg width="15" height="15" fill="currentColor" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1792 710v794q0 66-47 113t-113 47h-1472q-66 0-113-47t-47-113v-794q44 49 101 87 362 246 497 345 57 42 92.5 65.5t94.5 48 110 24.5h2q51 0 110-24.5t94.5-48 92.5-65.5q170-123 498-345 57-39 100-87zm0-294q0 79-49 151t-122 123q-376 261-468 325-10 7-42.5 30.5t-54 38-52 32.5-57.5 27-50 9h-2q-23 0-50-9t-57.5-27-52-32.5-54-38-42.5-30.5q-91-64-262-182.5t-205-142.5q-62-42-117-115.5t-55-136.5q0-78 41.5-130t118.5-52h1472q65 0 112.5 47t47.5 113z">
-            </path>
-        </svg>
-    )
-}
 
 const LockSvg = () => {
     return (
