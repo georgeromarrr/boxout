@@ -37,7 +37,7 @@ const Register = () => {
         console.log(response);
         if ( response.code === 200 || response.status === 200 ) {
             return swal(response.message,`Thanks for joining!`,"success")
-                .then( () => window.location = '/');
+                .then( () => window.location = '/login');
         } else if ( response.code === 403 || response.status === 403 ) {
             replaceClientToken();
             return handleRegister(ev);

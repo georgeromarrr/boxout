@@ -20,6 +20,7 @@ import Cart from './pages/cart/Cart';
 import Product from './pages/admin/product/Image';
 import ProductList from './pages/home/ProductList';
 import Profile from './pages/profile/Profile';
+import Otp from './pages/login/Otp';
 
 // contexts
 import { TokenContext } from "./context/TokenContext";
@@ -110,7 +111,7 @@ function App() {
               <Route path='/cart' element={<Cart />} />
               <Route path='/item' element={<Item />} />
               <Route path='/image-upload' element={<Product />} />
-              <Route path='/prd' element={<ProductList />} />
+              <Route path='/otp' element={<Otp />} />
               <Route path='/profile' element={<Profile />} />
           </Routes>
         </BrowserRouter>
