@@ -18,6 +18,7 @@ import Wishlist from './pages/wishlist/Wishlist';
 import Register from "./pages/register/Register";
 import Cart from './pages/cart/Cart';
 import Product from './pages/admin/product/Image';
+import ProductList from './pages/home/ProductList';
 
 // contexts
 import { TokenContext } from "./context/TokenContext";
@@ -94,6 +95,7 @@ function App() {
               <Route path='/cart' element={<Cart />} />
               <Route path='/item' element={<Item />} />
               <Route path='/image-upload' element={<Product />} />
+              <Route path='/prd' element={<ProductList />} />
           </Routes>
         </BrowserRouter>
       </UserContext.Provider>
