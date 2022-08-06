@@ -3,6 +3,7 @@ import { TokenContext } from "../../context/TokenContext";
 
 const ProductList = () =>  {
   const [myData, setMyData] = useState('');
+  const [isAvail, setAvailable] = useState('')
   const { clientToken }  = useContext(TokenContext);
 
   let headerAPI = new Headers();
@@ -10,7 +11,7 @@ const ProductList = () =>  {
   headerAPI.append("Content-Type", "application/json");
 
   let bodyAPI = JSON.stringify({
-    "search": "romar"
+    "search": isAvail
   });
 
   var requestAPI = {
@@ -33,8 +34,20 @@ const ProductList = () =>  {
   },[]);
 
 
+  console.log (myData)
   return (
     <div>
+     {/* <pre> {JSON.stringify(myData)}</pre> */}
+
+     {/* <ul>
+      {myData.map((item) => (
+        <li key={item.product_id}>{item.is_active ? item.name : null}</li>
+      ))}
+     </ul> */}
+
+     <form>
+      <input type="text" class="border-2"/>
+     </form>
     </div>
   )
 }
