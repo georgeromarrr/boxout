@@ -26,7 +26,7 @@ const Otp = () => {
         }
 
         try {
-            const response = await UserApi('POST', '/login', clientToken, body);
+            const response = await UserApi('POST', '/otp', clientToken, body);
             console.log(response);
             if ( response.code === 200 || response.status === 200 ) {
                 setUser({ ...response.user_profile, accessToken: response.access_token, refreshToken: response.refresh_token });
@@ -83,9 +83,10 @@ const Otp = () => {
     <div className="flex items-center justify-center mt-6">
     <Link to="/register" className="inline-flex items-center text-xs text-center">
         <span className="ml-2">
-            Go back to Login Page
+            Did not recieve code?
         </span>
     </Link>
+    <span className="inline-flex items-center text-xs text-center"> Resend </span>
 </div>
 </div>
 </div>
